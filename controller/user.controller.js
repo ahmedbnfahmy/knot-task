@@ -7,9 +7,14 @@ const Link = require("../models/link.module.js");
 const LinkSection = require("../models/linkSection.module.js");
 const Products = require("../models/product.module.js");
 
-exports.createUser = (reqBody) => {
-    return userModel.create(reqBody);
-  }
+exports.createUser = (req, res) => {
+  console.log(req.body);
+    return userModel.create(req.body).then(function (user) {
+      res.status(200).send(user);
+  })
+  .catch(err => res.status(400).send(err))
+};
+  
   // //GET USER
 exports.getUser = (req, res) => {
     User.findById(req.params.id)
@@ -132,8 +137,9 @@ exports.updateLink = (req, res) => {
 
 
 
-exports.addSectionLink = (reqBody) => { 
-  return LinkSection.create(reqBody);
+exports.addSectionLink = (req, res) => { 
+  console.log(req.body);
+  return LinkSection.create(req.body);
 }
 
 exports.deleteSectionLink = async (req, res) => {
