@@ -33,7 +33,7 @@ router.get("/getLinksSectionByUserId/:id",user.getLinksSectionByUserId);
 router.get("/userLinks/:id",user.getLinksByUserId);//
 router.get("/userSections/:id",user.getLinksSectionByUserId);//
 router.get("/:id",user.getUser);
-// router.get("/userLinkAndSections/:id",user.getUserWithLinkSectionsAndLinks);
+router.get("/userLinkAndSections/:id",user.getUserWithLinkSectionsAndLinks);
 
 //Update USER Links 
 router.post("/addLink",user.addLink);

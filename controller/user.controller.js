@@ -18,6 +18,28 @@ exports.getUser = (req, res) => {
         })
         .catch(err => res.status(400).send(err))
 };
+exports.getUserWithLinkSectionsAndLinks = (req, res) => {
+  const findQuery = [
+    {
+      $lookup:
+         {
+           from: "Link",
+           pipeline: [
+              { $match: { userId: req.user.id } },
+              { $project: { _id: 0, date: { label: "$label", url: "$url" ,} } },
+              { $replaceRoot: { newRoot: "$date" } }
+           ],
+           as: "LinkSection"
+         }
+    },
+  ];
+  LinkSection.aggregate(findQuery).exec(function (err, product) {
+      if (err) res.send(err);
+      res.status(200).send(product)
+  })
+}
+
+
 
 // //GET ALL USERS
 exports.getAllUsers = (req, res) => {
@@ -83,6 +105,7 @@ exports.getLinksSectionByUserId =(req, res) => {
 exports.addLink = (reqBody) => { 
   return Link.create(reqBody);
 }
+
 exports.deleteLink = async (req, res) => {
   try {
       await Link.findByIdAndDelete(req.params.id);
@@ -91,6 +114,7 @@ exports.deleteLink = async (req, res) => {
       res.status(500).json({message:"something wrong"});
   }
 };
+
 exports.updateLink = (req, res) => {
   Link.findByIdAndUpdate(req.params.id, {
                 $set: req.body
