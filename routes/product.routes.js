@@ -5,14 +5,14 @@ const router = require("express").Router();
 
 
 
-router.post("/",  product.addProduct);//
-router.get("/",  product.getAllProducts);//
+router.post("/createPrd",  product.addProduct);// working
+router.get("/",  product.getAllProducts);// working
 
-router.get("/product/:id",  product.getById); //
-router.get("/product/:ownerId", product.getByOwnerId); //
-router.put("/:id",  product.updateProduct);//
-router.patch("/:id",  product.patchProduct);//
-router.delete("/:id",  product.deleteProduct); //
+router.get("/:id",product.getById); // working
+router.get("/ownerId/:id", product.getByOwnerId); //647a841cd89a9531cb055cc3 // working
+router.put("/updatePrd/:id",  product.updateProduct);// working
+router.patch("/patchPrd/:id",  product.patchProduct);// working
+router.delete("/:id",  product.deleteProduct); // working
 
 
 module.exports = router;

@@ -1,47 +1,15 @@
-const users = require("../controller/user.controller.js");
-// const verify = require("../controller/verifyTokenapi.controller.js");
+const link = require("../controller/link.controller.js");
 const router = require("express").Router();
-const userModel=require('../models/user.module.js')
-//with verfiy
-//UPDATE
-// router.put("/:id", verify.verifyToken, users.updateUser);
-// router.get("/checkEmail/:email",users.checkEmail);
-// // DELETE
-// router.delete("/:id", verify.verifyTokenAndAuthorization, users.deleteUser); 
-// //GET USER
-// router.get("/:id", verify.verifyTokenAndAuthorization,users.getUser);
-// //GET ALL USERS
-// router.get("/", verify.verifyTokenAndAdmin,users.getAllUsers);
-// router.get("/check/forget/:email",users.checkForgetPass);
-// router.put("/changePass/:email", users.ChangePass);
-// router.post("/AddNew", verify.verifyTokenAndAdmin,users.AddUserForAdmin);
-// router.post("/pagination", verify.verifyTokenAndAdmin,users.getAllUserpagination);
 
-router.post("/", async (req, res, next) => {
-    var reqBody = req.body; 
-    console.log(reqBody);
-    //request body
-    //try catch to handle the error
-    try {
-      var savedUser = await users.createUser(reqBody);
-      res.status(201).json(savedUser); // to print it as json file
-    } catch (err) {
-      res.status(422).json({ message: err.message });
-    }
-  });
 
-// //without verfiy
-// router.put("/:id", users.updateUser);
-// // DELETE
-// router.delete("/:id", users.deleteUser); 
-// //GET USER
-// router.get("/:id",users.getUser);
-// //GET ALL USERS
-// router.get("/",users.getAllUsers);
+router.post("/createLink",  link.addlink);// working // sectionId //647d13e7f268ab6f1b5bc43a
+router.patch("/patchLink/:id",  link.patchlink);// working
+router.delete("/:id",  link.deletelink); // working
+router.get("/",  link.getAlllinks);// working with users and sections
 
-// router.post("/addNew",users.AddUserForAdmin);
-// router.post("/createUser",users.AddUserForAdmin);
-
+router.get("/userId/:id", link.getByUserId); //647a841cd89a9531cb055cc3 // working
+// router.get("/:id",link.getById); // working
+// router.put("/updatePrd/:id",  link.updatelink);// working
 
 
 module.exports = router;

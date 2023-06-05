@@ -19,21 +19,28 @@ const userModel=require('../models/user.module.js')
 
 
 // //without verfiy
-router.post("/createUser",user.createUser);//
+router.post("/createUser",user.createUser);// working 
+router.post("/createOwnerPrd/:id",user.createOwnerPrd);// working 
 // // DELETE
-router.delete("/:id", user.deleteUser); //
+router.delete("/:id", user.deleteUser); // working
+router.put("/updateUser/:id", user.updateUser); // working
 
 // router.put("/:id", user.updateUser);
-// //GET USER
-router.get("/userProducts/:id",user.getPrdByUserId);
+// //GET USER products
+router.get("/userProducts/:id",user.getPrdByUserId); //647a841cd89a9531cb055cc3 //working
+// router.get("/productsByUser/:id",user.getPrdByUserId);
 
-router.get("/productsByUser/:id",user.getPrdByUserId);
+// //GET USER linkSection
 router.get("/getLinksSectionByUserId/:id",user.getLinksSectionByUserId);
-
+ 
+// get Link and sections By UserId
 router.get("/userLinks/:id",user.getLinksByUserId);//
+
 router.get("/userSections/:id",user.getLinksSectionByUserId);//
+
+
 router.get("/:id",user.getUser);
-router.get("/userLinkAndSections/:id",user.getUserWithLinkSectionsAndLinks);
+// router.get("/userLinkAndSections/:id",user.getUserWithLinkSectionsAndLinks);
 
 //Update USER Links 
 router.post("/addLink",user.addLink);

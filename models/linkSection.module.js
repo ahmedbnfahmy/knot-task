@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-
+const link = require("../models/link.module.js");
 const linkSectionSchema = new mongoose.Schema({
 
 
@@ -18,5 +18,13 @@ const linkSectionSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
+// // , { document: false, query: true }
 
+// linkSectionSchema.pre('remove',
+//    async function(next) {
+//        console.log(inside);
+//     const sec =this
+//     await link.deleteMany({ "sectionId": sec._id });
+//     next()
+//    })
 module.exports = mongoose.model('LinkSection', linkSectionSchema);

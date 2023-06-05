@@ -6,13 +6,15 @@ const productSchema = new mongoose.Schema({
     ownerId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false
+        // required: false
     },
     active: { type: Boolean, default: false, required: true },
+    // name: { type: String, required: true },
+    
     productType: {
         type: String,
-        enum: ['CARD', 'KEYCHAIN', 'STICKER'],
-        default: 'CARD',
+        enum: ["CARD", "KEYCHAIN", "STICKER"],
+        default: "CARD",
         required: true,
       },
  

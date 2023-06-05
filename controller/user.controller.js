@@ -14,7 +14,53 @@ exports.createUser = (req, res) => {
   })
   .catch(err => res.status(400).send(err))
 };
+
+exports.createOwnerPrd = (req, res) => {
+  // console.log(req);
+  console.log(req.body);
+  // console.log(req.params.id);
+
+  const newProduct = new Products({
+    ownerId: req.params.id,
+    productType: req.body.productType,
+    active:req.body.active,
+    // name:req.body.name,
+  });
+  // console.log(newProduct, "yyyyy");
+  newProduct
+    .save()
+    .then((savedProduct) => {
+      console.log(savedProduct);
+      res.status(200).send(savedProduct);
+    })
+    .catch((err) => {
+      res.status(401).send({ message: "something wrong" });
+    });
+}
+
+//     return Products.create(req.body).then(function (product) {
+//       res.status(200).send(product);
+//   })
+//   .catch(err => res.status(400).send(err))
+// };
+
+exports.updateUser = (req, res) => {
+  console.log(req.params.id);
+  userModel.findByIdAndUpdate(req.params.id, {
+                $set: req.body
+            }, {
+                new: true
+            })
+            .then(sendData => {
+                res.status(200).send(sendData)
+            })
+            .catch(err => {
+                res.status(402).send({message:"something wrong"})
+            })      
   
+}
+
+
   // //GET USER
 exports.getUser = (req, res) => {
     User.findById(req.params.id)
@@ -23,6 +69,7 @@ exports.getUser = (req, res) => {
         })
         .catch(err => res.status(400).send(err))
 };
+
 exports.getUserWithLinkSectionsAndLinks = (req, res) => {
   const findQuery = [
     {
@@ -59,6 +106,7 @@ exports.getAllUsers = (req, res) => {
 
 //DELETE
 exports.deleteUser = (req, res) => {
+  console.log(req.params.id);
     User.findByIdAndDelete(req.params.id).then(data => {
         console.log(data)
         res.status(200).send(data)
@@ -67,32 +115,34 @@ exports.deleteUser = (req, res) => {
     })
 
 };
+  // get Link and sections By UserId
+  exports.getLinksByUserId =(req, res) => {
+    console.log(req.params.id);
+    Link.find({userId: req.params.id}).populate('sectionId').populate('userId').then((link) => {
+      console.log(link);
+      res.status(200).send(link); 
+      console.log("link founded by owner id")}).catch((err)=>{
+        res.status(404).send(err)
+      })
+    
+  };
+  
 
-
+  // get Prd By UserId
 exports.getPrdByUserId =(req, res) => {
-  Products.find({ownerId: req.params.id}).populate('ownerId').exec((err, product) => {
+  console.log(req.params.id);
+  Products.find({ownerId: req.params.id}).populate('ownerId').then((product) => {
+    console.log(product);
+    res.status(200).send(product); 
+    console.log("product founded by owner id")}).catch((err)=>{
+      res.status(404).send(err)
+    })
   // product.find({ownerId: req.body.ownerId},(err, product) => {
-    if (err) { res.status(404).send(err) };
-    {
-        res.status(200).send(product);
-        console.log("product founded by owner id")
-    }
-})
   
 };
 
-exports.getLinksByUserId =(req, res) => {
-  // Link.find({userId: req.params.id}).populate('userId').exec((err, link) => {
-  Link.find({userId: req.params.id}).populate('sectionId').populate('userId').exec((err, link) => {
-  // product.find({ownerId: req.body.ownerId},(err, product) => {
-    if (err) { res.status(404).send(err) };
-    {
-        res.status(200).send(link);
-        console.log("link founded by owner id")
-    }
-})
-  
-};
+
+
 exports.getLinksSectionByUserId =(req, res) => {
   // Link.find({userId: req.params.id}).populate('userId').exec((err, link) => {
   LinkSection.find({userId: req.params.id}).populate('userId').exec((err, section) => {
@@ -166,6 +216,20 @@ exports.updateSectionLink = (req, res) => {
   
 }
 
+
+
+// exports.getLinksByUserId =(req, res) => {
+//   // Link.find({userId: req.params.id}).populate('userId').exec((err, link) => {
+//   Link.find({userId: req.params.id}).populate('sectionId').populate('userId').exec((err, link) => {
+//   // product.find({ownerId: req.body.ownerId},(err, product) => {
+//     if (err) { res.status(404).send(err) };
+//     {
+//         res.status(200).send(link);
+//         console.log("link founded by owner id")
+//     }
+// })
+  
+// };
 
 
 // exports.getUserWithProducts = (req, res) => {
