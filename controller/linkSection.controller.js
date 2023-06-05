@@ -15,21 +15,26 @@ exports.addlinkSection = (req, res) => {
 
 exports.deletelinkSection = async (req, res) => {
   try {
-      await linkSection.findByIdAndDelete(req.params.id);
+      await linkSection.findByIdAndRemove(req.params.id);
       res.status(200).send("linkSection has been deleted...");
   } catch (err) {
       res.status(500).json({message:"something wrong"});
   }
 };
-exports.deleteCascadelinkSection = (req, res) => {
+
+exports.deleteCascadelinkSection = (req, res) => { 
   const delId=req.params.id;
-  link.findByIdAndDelete(req.params.id).then(async function(delId) {
-  await linkSection.findByIdAndDelete(delId);
-  res.status(200).send("linkSection cascade has been deleted...");
+  console.log(delId);
+  link.deleteMany({ sectionId: delId}).then(
+    async ()=> {
+        try {
+            await linkSection.findByIdAndDelete(req.params.id);
+            res.status(200).send("linkSection has been deleted...");
+        } catch (err) {
+            res.status(500).json({err ,message:"something wrong"});
+      };
           })
-          .catch(err => {
-              res.status(402).send({message:"something wrong"})
-          })
+         
   }
 
 
