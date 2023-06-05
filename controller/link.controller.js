@@ -1,4 +1,4 @@
-const link = require("../models/link.module.js");
+const link = require("../models/link.model.js");
 
 exports.addlink = (req, res) => {
   console.log(req.body);

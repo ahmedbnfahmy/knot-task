@@ -1,11 +1,11 @@
-const User = require("../models/user.module.js");
+const User = require("../models/user.model.js");
 // const jwt = require("jsonwebtoken");
 // const bcrypt = require('bcrypt');
 // const validator = require('validator');
-const userModel=require('../models/user.module.js')
-const Link = require("../models/link.module.js");
-const LinkSection = require("../models/linkSection.module.js");
-const Products = require("../models/product.module.js");
+const userModel=require('../models/user.model.js')
+const Link = require("../models/link.model.js");
+const LinkSection = require("../models/linkSection.model.js");
+const Products = require("../models/product.model.js");
 
 exports.createUser = (req, res) => {
   console.log(req.body);

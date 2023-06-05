@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const links = require("../models/link.module.js");
+const links = require("./link.model.js");
 
 
 const linkSectionSchema = new mongoose.Schema({
@@ -19,12 +19,15 @@ const linkSectionSchema = new mongoose.Schema({
     timestamps: true,
 });
 // , { document: false, query: true }
-
-linkSectionSchema.pre('Remove',async function(next) {
-    //    console.log("inside");
-    const linkSection =this;
-    await links.deleteMany({ sectionId: linkSection._id });
-    // await link.deleteMany({ _id : "647d1c193358bd9d82c5ff4e"});
-    next("inside")
-   })
+// linkSectionSchema.pre('remove', async function(next){
+//         const linkSection =this;
+//         await links
+//         .remove({sectionId: linkSection._id }, next);
+        // .deleteMany({ sectionId: linkSection._id })
+//   })
+// linkSectionSchema.pre('Remove',async function(next) {
+//     //    console.log("inside");
+//     // await link.deleteMany({ _id : "647d1c193358bd9d82c5ff4e"});
+//     next("inside")
+//    })
 module.exports = mongoose.model('LinkSection', linkSectionSchema);
