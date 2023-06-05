@@ -1,5 +1,5 @@
 const user = require("../controller/user.controller.js");
-// const verify = require("../controller/verifyTokenapi.controller.js");
+const verify = require("../controller/verifyTokenapi.controller.js");
 const router = require("express").Router();
 const userModel=require('../models/user.model.js')
 //with verfiy
@@ -19,15 +19,15 @@ const userModel=require('../models/user.model.js')
 
 
 // //without verfiy
-router.post("/createUser",user.createUser);// working 
+// router.post("/createUser",verify.verifyTokenAndAdmin,user.createUser);// working 
 router.post("/createOwnerPrd/:id",user.createOwnerPrd);// working 
 // // DELETE
-router.delete("/:id", user.deleteUser); // working
-router.put("/updateUser/:id", user.updateUser); // working
+router.delete("/:id",verify.verifyTokenAndAuthorization, user.deleteUser); // working
+router.put("/updateUser/:id",verify.verifyToken, user.updateUser); // working
 
 // router.put("/:id", user.updateUser);
 // //GET USER products
-router.get("/userProducts/:id",user.getPrdByUserId); //647a841cd89a9531cb055cc3 //working
+router.get("/userProducts/:id",verify.verifyTokenAndAuthorization,user.getPrdByUserId); //647a841cd89a9531cb055cc3 //working
 // router.get("/productsByUser/:id",user.getPrdByUserId);
 
 // //GET USER linkSection
@@ -38,7 +38,7 @@ router.get("/userLinks/:id",user.getLinksByUserId);//
 
 router.get("/userSections/:id",user.getLinksSectionByUserId);//
 
-
+// router.post("/AddNew", verify.verifyTokenAndAdmin,users.AddUserForAdmin);
 router.get("/:id",user.getUser);
 // router.get("/userLinkAndSections/:id",user.getUserWithLinkSectionsAndLinks);
 

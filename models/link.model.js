@@ -13,9 +13,10 @@ const linkSchema = new mongoose.Schema({
         ref: 'LinkSection'
     },
     active: { type: Boolean, default: true, required: true },
-    label: { type: String,maxlength: 50, required: true },
-    image: { type: String,maxlength: 50, required: true },
-    url: { type: String,maxlength: 50, required: true },
+    label: { type: String,maxlength: 50,default: 'true', required: true },
+    // image: { type: String,maxlength: 50, required: true },
+    image: { type:Object , required: true },
+    url: { type: String,maxlength: 50,default: 'true', required: true },
    
     
 }, {

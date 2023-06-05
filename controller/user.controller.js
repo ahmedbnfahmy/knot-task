@@ -6,6 +6,7 @@ const userModel=require('../models/user.model.js')
 const Link = require("../models/link.model.js");
 const LinkSection = require("../models/linkSection.model.js");
 const Products = require("../models/product.model.js");
+const cloudinary = require("../utils/clodinary.js");
 
 exports.createUser = (req, res) => {
   console.log(req.body);
@@ -160,6 +161,30 @@ exports.getLinksSectionByUserId =(req, res) => {
 exports.addLink = (reqBody) => { 
   return Link.create(reqBody);
 }
+
+exports.addLink =async(req, res) => {
+  console.log(req.body);
+  const {userId,sectionId,active,url,image}=req.body;
+try {
+  if(image){
+    const uploadRes=await cloudinary.uploader.upload(image,{
+      upload_preset:"knot-task"
+    })
+    if(uploadRes){
+      const link=new Link({
+        userId,sectionId,active,url,
+        image:uploadRes,
+      })
+      const savedLink=await link.save()
+      res.status(200).send(savedLink);
+    }
+  }
+}
+catch (err) {res.status(400).send(err)}
+    // return Link.create(req.body).then(function (link) {
+  
+};
+
 
 exports.deleteLink = async (req, res) => {
   try {

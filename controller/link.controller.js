@@ -1,5 +1,5 @@
 const link = require("../models/link.model.js");
-
+const cloudinary = require("../utils/clodinary.js");
 exports.addlink = (req, res) => {
   console.log(req.body);
   return link.create(req.body)
@@ -8,6 +8,36 @@ exports.addlink = (req, res) => {
     })
     .catch((err) => res.status(400).send(err));
 };
+
+// exports.addlink =async(req, res) => {
+//   console.log(req.body);
+//   const {userId,sectionId,active,url,image}=req.body;
+// try {
+//   if(image){console.log(image);
+//     const uploadRes=await cloudinary.uploader.upload(image,{
+//       upload_preset:"knotTask"
+      
+//     })
+//     if(uploadRes){console.log("image");
+//       const link=new link({
+//         userId,sectionId,active,url,
+//         image:uploadRes,
+//       })
+//       link.create(link)
+//     .then(function (link) {
+//       res.status(200).send(link);
+//     })
+//     .catch((err) => res.status(400).send(err));
+// };
+// //       const savedLink=await link.save()
+// //       res.status(200).send(savedLink);
+// //     }
+//   }
+// }
+// catch (err) {res.status(400).send(err)}
+// //     // return Link.create(req.body).then(function (link) {
+  
+// };
 
 exports.deletelink = async (req, res) => {
   try {
@@ -40,8 +70,7 @@ exports.patchlink = (req, res) => {
 };
 
 exports.getAlllinks = (req, res) => {
-  link
-    .find({}).populate("userId").populate('sectionId')
+  link.find({}).populate("userId").populate('sectionId')
     .then(function (link) {
       res.send(link);
     })
